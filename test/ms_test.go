@@ -1,9 +1,9 @@
 package test
 
 import (
+	"encoding/json"
 	"fmt"
 	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
-	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -12,16 +12,19 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func validateBody(statusCode int, body string) bool {
+func validateBody(statusCode int, body string, region string) bool {
+	fmt.Printf("Status code: %d\n", statusCode)
+	fmt.Printf("Body: %s\n", body)
 	if statusCode == 200 {
-		fmt.Println(body)
-		r, _ := regexp.Compile("{\"Region\": \"(us(-gov)?|ap|ca|cn|eu|sa)-(central|(north|south)?(east|west)?)-\\d\"}")
-		matched := r.MatchString(body)
-		if matched {
-			return true
-		} else {
+		var resBody map[string]string
+		err := json.Unmarshal([]byte(body), &resBody)
+		if err != nil {
 			return false
 		}
+		if resBody["Region"] == region {
+			return true
+		}
+		return false
 	} else {
 		return false
 	}
@@ -52,5 +55,7 @@ func TestMicroservice(t *testing.T) {
 	stageUrl := terraform.Output(t, terraformOpts, "stage_url")
 
 	url := fmt.Sprintf("%s/%s", stageUrl, pathName)
-	http_helper.HttpGetWithRetryWithCustomValidation(t, url, nil, 5, 5*time.Second, validateBody)
+	http_helper.HttpGetWithRetryWithCustomValidation(t, url, nil, 5, 5*time.Second, func(i int, s string) bool {
+		return validateBody(i, s, awsRegion)
+	})
 }
