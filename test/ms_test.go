@@ -35,7 +35,7 @@ func TestMicroservice(t *testing.T) {
 		TerraformDir: "./terraform/",
 		Vars: map[string]interface{}{
 			"suffix":       strings.ToLower(random.UniqueId()),
-			"code_dir":     "src/",
+			"code_dir":     "files/region-test/",
 			"cors_enabled": true,
 			"prefix":       fmt.Sprintf("microservice-terratest-%s", strings.ToLower(random.UniqueId())),
 			"path_name":    pathName,
