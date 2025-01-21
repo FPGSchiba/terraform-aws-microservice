@@ -1,13 +1,20 @@
-name: Update Semver
+name: Release
 on:
-  push:
-    branches-ignore:
-      - '**'
-    tags:
-      - 'v*.*.*'
+  pull_request:
+    types:
+      - closed
 jobs:
-  update-semver:
+  tag:
+    name: Tag
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: haya14busa/action-update-semver@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Semver Tag
+        uses: K-Phoen/semver-release-action@v1.3.2
+        with:
+          release_branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
