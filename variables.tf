@@ -57,6 +57,12 @@ variable "handler" {
   default     = "main.lambda_handler"
 }
 
+variable "main_filename" {
+  type        = string
+  description = "Main filename of the lambda function (only needed for go Lambda functions)"
+  default     = "main.go"
+}
+
 variable "environment_variables" {
   description = "Environment variables used by the lambda function"
   type        = map(string)
