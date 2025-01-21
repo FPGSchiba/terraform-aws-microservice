@@ -11,13 +11,13 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.17.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >=4.17 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v1.0.3 |
+| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.0.1 |
 
 ## Resources
 
@@ -41,7 +41,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_additional_iam_statements"></a> [additional\_iam\_statements](#input\_additional\_iam\_statements) | Additional permissions added to the lambda function | <pre>list(object({<br>    actions   = list(string)<br>    resources = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_additional_iam_statements"></a> [additional\_iam\_statements](#input\_additional\_iam\_statements) | Additional permissions added to the lambda function | <pre>list(object({<br/>    actions   = list(string)<br/>    resources = list(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_api_name"></a> [api\_name](#input\_api\_name) | A REST API Gateway name used to deploy all methods and stages on. | `string` | n/a | yes |
 | <a name="input_authorization_type"></a> [authorization\_type](#input\_authorization\_type) | The type of Authorization used on this microservice. ('NONE' or 'COGNITO\_USER\_POOLS') | `string` | `"NONE"` | no |
 | <a name="input_authorizer_id"></a> [authorizer\_id](#input\_authorizer\_id) | The Authorizer ID for cognito\_user\_pools. (Only Used if: authorization\_type == 'COGNITO\_USER\_POOLS') | `string` | `null` | no |
@@ -51,14 +51,15 @@
 | <a name="input_cors_enabled"></a> [cors\_enabled](#input\_cors\_enabled) | If the api path is ready for cors requests. | `bool` | n/a | yes |
 | <a name="input_enable_tracing"></a> [enable\_tracing](#input\_enable\_tracing) | Enable active tracing | `bool` | `false` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Environment variables used by the lambda function | `map(string)` | `{}` | no |
-| <a name="input_handler"></a> [handler](#input\_handler) | Lambda handler | `string` | `"main.lambda_handler"` | no |
+| <a name="input_handler"></a> [handler](#input\_handler) | Lambda handler | `string` | `null` | no |
 | <a name="input_http_methods"></a> [http\_methods](#input\_http\_methods) | The HTTP Methods used for this API Path. ('GET', 'POST', 'PUT', 'DELETE', 'HEAD') | `list(string)` | n/a | yes |
 | <a name="input_layer_arns"></a> [layer\_arns](#input\_layer\_arns) | The Lambda Layer ARNs. | `list(string)` | `[]` | no |
+| <a name="input_main_filename"></a> [main\_filename](#input\_main\_filename) | Main filename of the lambda function (only needed for go Lambda functions) | `string` | `"main.go"` | no |
 | <a name="input_name_overwrite"></a> [name\_overwrite](#input\_name\_overwrite) | If the path\_name contains any special Characters this Variable can be used to overwrite the Lambda Name. | `string` | `null` | no |
 | <a name="input_parent_id"></a> [parent\_id](#input\_parent\_id) | The id of a parent resource, if a parent resource is necessary. | `string` | `null` | no |
 | <a name="input_path_name"></a> [path\_name](#input\_path\_name) | The resource Path used on the api. If this value is a Path Variable, please use the name\_overwrite variable. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | The Prefix used to deploy the lambda function. | `string` | n/a | yes |
-| <a name="input_runtime"></a> [runtime](#input\_runtime) | Lambda Runtime | `string` | `"python3.8"` | no |
+| <a name="input_runtime"></a> [runtime](#input\_runtime) | Lambda Runtime | `string` | `"provided.al2"` | no |
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Number of seconds, until the Lambda timeouts | `number` | `3` | no |
 
 ## Outputs

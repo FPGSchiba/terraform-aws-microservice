@@ -1,5 +1,6 @@
 module "lambda" {
-  source                    = "github.com/FPGSchiba/terraform-aws-lambda?ref=v1.0.3"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.0.1"
+
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
   layer_arns                = var.layer_arns
@@ -9,6 +10,7 @@ module "lambda" {
   enable_tracing            = var.enable_tracing
   timeout                   = var.timeout
   additional_iam_statements = var.additional_iam_statements
+  main_filename             = var.main_filename
 }
 
 resource "aws_api_gateway_resource" "this" {

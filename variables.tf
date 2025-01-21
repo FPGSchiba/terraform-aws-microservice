@@ -48,13 +48,19 @@ variable "layer_arns" {
 variable "runtime" {
   description = "Lambda Runtime"
   type        = string
-  default     = "python3.8"
+  default     = "provided.al2"
 }
 
 variable "handler" {
   description = "Lambda handler"
   type        = string
-  default     = "main.lambda_handler"
+  default     = null
+}
+
+variable "main_filename" {
+  type        = string
+  description = "Main filename of the lambda function (only needed for go Lambda functions)"
+  default     = "main.go"
 }
 
 variable "environment_variables" {
