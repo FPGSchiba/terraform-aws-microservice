@@ -121,3 +121,47 @@ variable "name_overwrite" {
   type        = string
   default     = null
 }
+
+variable "security_groups" {
+  description = "List of security group rules to apply"
+  type = list(object({
+    name        = string
+    description = string
+    ingress_rules = list(object({
+      type        = string
+      from_port   = optional(number)
+      to_port     = optional(number)
+      ip_protocol = string
+      cidr_block  = string
+    }))
+    egress_rules = list(object({
+      type        = string
+      from_port   = optional(number)
+      to_port     = optional(number)
+      ip_protocol = string
+      cidr_block  = string
+    }))
+  }))
+  validation {
+    condition = alltrue([
+      for sg in var.security_groups : alltrue([
+        alltrue([for rule in sg.ingress_rules : contains(["ipv4", "ipv6"], rule.type)]),
+        alltrue([for rule in sg.egress_rules : contains(["ipv4", "ipv6"], rule.type)])
+      ])
+    ])
+    error_message = "Each rule.type must be either 'ipv4' or 'ipv6'."
+  }
+  default = []
+}
+
+variable "vpc_id" {
+  description = "The VPC ID to deploy the lambda function in. If this value is null, the lambda function will be deployed outside of a VPC."
+  type        = string
+  default     = null
+}
+
+variable "tags" {
+  description = "A map of tags to add to all resources."
+  type        = map(string)
+  default     = {}
+}

@@ -55,7 +55,6 @@ module "microservice" {
 
 resource "aws_api_gateway_deployment" "this" {
   rest_api_id = aws_api_gateway_rest_api.api.id
-  stage_name  = "test"
 
   depends_on = [
     module.microservice,
@@ -63,6 +62,12 @@ resource "aws_api_gateway_deployment" "this" {
   ]
 }
 
+resource "aws_api_gateway_stage" "this" {
+  deployment_id = aws_api_gateway_deployment.this.id
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  stage_name    = "test"
+}
+
 output "stage_url" {
-  value = aws_api_gateway_deployment.this.invoke_url
+  value = aws_api_gateway_stage.this.invoke_url
 }

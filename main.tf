@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.0.1"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.1.1"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
@@ -11,6 +11,9 @@ module "lambda" {
   timeout                   = var.timeout
   additional_iam_statements = var.additional_iam_statements
   main_filename             = var.main_filename
+  security_groups           = var.security_groups
+  vpc_id                    = var.vpc_id
+  tags                      = var.tags
 }
 
 resource "aws_api_gateway_resource" "this" {
