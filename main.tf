@@ -13,7 +13,7 @@ module "lambda" {
   main_filename             = var.main_filename
   security_groups           = var.security_groups
   vpc_id                    = var.vpc_id
-  tags = var.tags
+  tags                      = var.tags
 }
 
 resource "aws_api_gateway_resource" "this" {

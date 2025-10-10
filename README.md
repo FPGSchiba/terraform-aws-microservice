@@ -4,20 +4,20 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.9 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >=4.17 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >=4.17 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.17.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.0.1 |
+| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.1.1 |
 
 ## Resources
 
@@ -60,7 +60,10 @@
 | <a name="input_path_name"></a> [path\_name](#input\_path\_name) | The resource Path used on the api. If this value is a Path Variable, please use the name\_overwrite variable. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | The Prefix used to deploy the lambda function. | `string` | n/a | yes |
 | <a name="input_runtime"></a> [runtime](#input\_runtime) | Lambda Runtime | `string` | `"provided.al2"` | no |
+| <a name="input_security_groups"></a> [security\_groups](#input\_security\_groups) | List of security group rules to apply | <pre>list(object({<br/>    name        = string<br/>    description = string<br/>    ingress_rules = list(object({<br/>      type        = string<br/>      from_port   = optional(number)<br/>      to_port     = optional(number)<br/>      ip_protocol = string<br/>      cidr_block  = string<br/>    }))<br/>    egress_rules = list(object({<br/>      type        = string<br/>      from_port   = optional(number)<br/>      to_port     = optional(number)<br/>      ip_protocol = string<br/>      cidr_block  = string<br/>    }))<br/>  }))</pre> | `[]` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Number of seconds, until the Lambda timeouts | `number` | `3` | no |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID to deploy the lambda function in. If this value is null, the lambda function will be deployed outside of a VPC. | `string` | `null` | no |
 
 ## Outputs
 
