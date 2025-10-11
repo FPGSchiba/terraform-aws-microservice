@@ -153,6 +153,12 @@ variable "vpc_id" {
   default     = null
 }
 
+variable "vpc_dualstack" {
+  description = "Whether to deploy the lambda function in a dualstack VPC (IPv4 and IPv6). Only used if vpc_networked is true."
+  type        = bool
+  default     = false
+}
+
 variable "tags" {
   description = "A map of tags to add to all resources."
   type        = map(string)
