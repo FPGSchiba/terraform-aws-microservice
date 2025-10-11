@@ -14,6 +14,7 @@ module "lambda" {
   security_groups           = var.security_groups
   vpc_id                    = var.vpc_id
   tags                      = var.tags
+  go_build_tags             = var.go_build_tags
 }
 
 resource "aws_api_gateway_resource" "this" {

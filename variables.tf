@@ -165,3 +165,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "go_build_tags" {
+  description = "Build tags for go build command"
+  type        = list(string)
+  default     = []
+}
