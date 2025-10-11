@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.1.3"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.1.4"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
@@ -15,6 +15,7 @@ module "lambda" {
   vpc_id                    = var.vpc_id
   tags                      = var.tags
   go_build_tags             = var.go_build_tags
+  vpc_networked             = var.vpc_networked
 }
 
 resource "aws_api_gateway_resource" "this" {
@@ -138,5 +139,5 @@ resource "aws_lambda_permission" "this" {
   principal     = "apigateway.amazonaws.com"
 
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  source_arn = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${data.aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.this[each.key].http_method}${aws_api_gateway_resource.this.path}"
+  source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${data.aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.this[each.key].http_method}${aws_api_gateway_resource.this.path}"
 }

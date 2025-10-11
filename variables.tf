@@ -147,6 +147,12 @@ variable "security_groups" {
   default = []
 }
 
+variable "vpc_networked" {
+  description = "If the lambda function should be deployed in a VPC."
+  type        = bool
+  default     = false
+}
+
 variable "vpc_id" {
   description = "The VPC ID to deploy the lambda function in. If this value is null, the lambda function will be deployed outside of a VPC."
   type        = string
