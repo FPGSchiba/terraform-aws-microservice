@@ -15,7 +15,7 @@ module "lambda" {
   tags                      = var.tags
   go_build_tags             = var.go_build_tags
   vpc_networked             = var.vpc_networked
-  vpc_dualstack            = var.vpc_dualstack
+  vpc_dualstack             = var.vpc_dualstack
 }
 
 resource "aws_api_gateway_resource" "this" {
