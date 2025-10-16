@@ -153,6 +153,12 @@ variable "vpc_id" {
   default     = null
 }
 
+variable "subnet_ids" {
+  description = "The IDs of the subnets where the lambda function will be deployed"
+  type        = list(string)
+  default     = []
+}
+
 variable "vpc_dualstack" {
   description = "Whether to deploy the lambda function in a dualstack VPC (IPv4 and IPv6). Only used if vpc_networked is true."
   type        = bool

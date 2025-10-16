@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.2.2"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.2.3"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
@@ -16,6 +16,7 @@ module "lambda" {
   go_build_tags             = var.go_build_tags
   vpc_networked             = var.vpc_networked
   vpc_dualstack             = var.vpc_dualstack
+  subnet_ids                = var.subnet_ids
 }
 
 resource "aws_api_gateway_resource" "this" {
@@ -95,6 +96,7 @@ resource "aws_api_gateway_integration" "this" {
   http_method             = aws_api_gateway_method.this[each.key].http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
+  timeout_milliseconds    = var.timeout * 1000
   uri                     = module.lambda.function_invoke_arn
 }
 
