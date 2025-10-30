@@ -19,14 +19,15 @@ module "lambda" {
   subnet_ids                = var.subnet_ids
 }
 
+# Create the API resource only when not binding to an existing path
 resource "aws_api_gateway_resource" "this" {
-  count = local.existing_child == null ? 1 : 0
-
+  count       = local.should_create_resource ? 1 : 0
   rest_api_id = data.aws_api_gateway_rest_api.api.id
   parent_id   = local.parent_resource_id
   path_part   = var.path_name
 }
 
+# CORS: OPTIONS method
 resource "aws_api_gateway_method" "options" {
   count = var.cors_enabled ? 1 : 0
 
@@ -79,6 +80,7 @@ resource "aws_api_gateway_integration_response" "options" {
   }
 }
 
+# Primary methods
 resource "aws_api_gateway_method" "this" {
   for_each = toset(var.http_methods)
 
@@ -134,6 +136,7 @@ resource "aws_api_gateway_method_response" "this_500" {
   depends_on = [aws_api_gateway_method.this]
 }
 
+# Lambda permissions per method
 resource "aws_lambda_permission" "this" {
   for_each = toset(var.http_methods)
 
