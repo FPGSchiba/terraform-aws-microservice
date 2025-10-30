@@ -176,3 +176,15 @@ variable "go_build_tags" {
   type        = list(string)
   default     = []
 }
+
+variable "existing_resource_path" {
+  description = "If provided, use this existing API Gateway resource path (e.g., /foo/bar) instead of creating a resource."
+  type        = string
+  default     = null
+}
+
+variable "create_if_missing" {
+  description = "Create the API resource if it doesn't already exist (ignored when existing_resource_path is provided)."
+  type        = bool
+  default     = true
+}
