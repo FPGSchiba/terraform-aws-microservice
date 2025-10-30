@@ -11,9 +11,7 @@ locals {
   existing_child = length(local.matching_children) > 0 ? local.matching_children[0] : null
 
   # Final resource id to use everywhere
-  target_resource_id = local.existing_child != null ? local.existing_child.id : (
-    aws_api_gateway_resource.this[0].id
-  )
+  target_resource_id = local.existing_child == null ? aws_api_gateway_resource.this[0].id : local.existing_child.id
 
-  target_resource_path = local.existing_child != null ? local.existing_child.path : aws_api_gateway_resource.this[0].path
+  target_resource_path = local.existing_child == null ? aws_api_gateway_resource.this[0].path : local.existing_child.path
 }
