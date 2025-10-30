@@ -4,13 +4,11 @@ locals {
     for r in data.aws_api_gateway_resources.all.items : r
     if r.parent_id == local.parent_resource_id
   ]
-  existing_child = length([
+  matching_children = [
     for r in local.sibling_children : r
     if r.path_part == var.path_name
-    ]) > 0 ? [
-    for r in local.sibling_children : r
-    if r.path_part == var.path_name
-  ][0] : null
+  ]
+  existing_child = length(local.matching_children) > 0 ? local.matching_children[0] : null
 
   # Final resource id to use everywhere
   target_resource_id = local.existing_child != null ? local.existing_child.id : (
