@@ -49,9 +49,10 @@
 | <a name="input_cognito_scopes"></a> [cognito\_scopes](#input\_cognito\_scopes) | The Authorization scope from cognito\_user\_pools. (Only Used if: authorization\_type == 'COGNITO\_USER\_POOLS') | `list(string)` | `null` | no |
 | <a name="input_control_allow_origin"></a> [control\_allow\_origin](#input\_control\_allow\_origin) | The CORS Access-Control-Allow-Origin header value. | `string` | `"*"` | no |
 | <a name="input_cors_enabled"></a> [cors\_enabled](#input\_cors\_enabled) | If the api path is ready for cors requests. | `bool` | n/a | yes |
+| <a name="input_create_resource"></a> [create\_resource](#input\_create\_resource) | Whether to create a new API Gateway resource. Set to false when using existing\_resource\_id. | `bool` | `true` | no |
 | <a name="input_enable_tracing"></a> [enable\_tracing](#input\_enable\_tracing) | Enable active tracing | `bool` | `false` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Environment variables used by the lambda function | `map(string)` | `{}` | no |
-| <a name="input_existing_resource_id"></a> [existing\_resource\_id](#input\_existing\_resource\_id) | ID of an existing API Gateway resource to attach methods to. If provided, no new resource will be created and existing\_resource\_path will be ignored. | `string` | `null` | no |
+| <a name="input_existing_resource_id"></a> [existing\_resource\_id](#input\_existing\_resource\_id) | ID of an existing API Gateway resource to attach methods to. Only used when create\_resource is false. | `string` | `null` | no |
 | <a name="input_go_build_tags"></a> [go\_build\_tags](#input\_go\_build\_tags) | Build tags for go build command | `list(string)` | `[]` | no |
 | <a name="input_handler"></a> [handler](#input\_handler) | Lambda handler | `string` | `null` | no |
 | <a name="input_http_methods"></a> [http\_methods](#input\_http\_methods) | The HTTP Methods used for this API Path. ('GET', 'POST', 'PUT', 'DELETE', 'HEAD') | `list(string)` | n/a | yes |
