@@ -1,5 +1,5 @@
-variable "api_name" {
-  description = "A REST API Gateway name used to deploy all methods and stages on."
+variable "api_id" {
+  description = "The API Gateway REST API ID where the microservice will be deployed."
   type        = string
 }
 

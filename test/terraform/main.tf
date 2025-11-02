@@ -41,10 +41,11 @@ resource "aws_api_gateway_rest_api" "api" {
 
 module "microservice" {
   source       = "../../"
-  api_name     = aws_api_gateway_rest_api.api.name
+  api_id       = aws_api_gateway_rest_api.api.id
+  parent_id    = aws_api_gateway_rest_api.api.root_resource_id
   code_dir     = var.code_dir
   cors_enabled = var.cors_enabled
-  http_methods  = ["GET"]
+  http_methods = ["GET"]
   path_name    = var.path_name
   prefix       = var.prefix
 

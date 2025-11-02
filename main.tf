@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.2.3"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.2.4"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
@@ -21,9 +21,10 @@ module "lambda" {
 
 # Create the API resource only when not binding to an existing resource
 resource "aws_api_gateway_resource" "this" {
-  count       = local.should_create_resource ? 1 : 0
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
-  parent_id   = local.parent_resource_id
+  count = local.should_create_resource ? 1 : 0
+
+  rest_api_id = var.api_id
+  parent_id   = var.parent_id
   path_part   = var.path_name
 }
 
@@ -31,7 +32,7 @@ resource "aws_api_gateway_resource" "this" {
 resource "aws_api_gateway_method" "options" {
   count = var.cors_enabled ? 1 : 0
 
-  rest_api_id   = data.aws_api_gateway_rest_api.api.id
+  rest_api_id   = var.api_id
   resource_id   = local.target_resource_id
   http_method   = "OPTIONS"
   authorization = "NONE"
@@ -40,7 +41,7 @@ resource "aws_api_gateway_method" "options" {
 resource "aws_api_gateway_method_response" "options_200" {
   count = var.cors_enabled ? 1 : 0
 
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = var.api_id
   resource_id = local.target_resource_id
   http_method = aws_api_gateway_method.options[0].http_method
   status_code = 200
@@ -57,7 +58,7 @@ resource "aws_api_gateway_method_response" "options_200" {
 resource "aws_api_gateway_integration" "options" {
   count = var.cors_enabled ? 1 : 0
 
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = var.api_id
   resource_id = local.target_resource_id
   http_method = aws_api_gateway_method.options[0].http_method
   type        = "MOCK"
@@ -69,7 +70,7 @@ resource "aws_api_gateway_integration" "options" {
 resource "aws_api_gateway_integration_response" "options" {
   count = var.cors_enabled ? 1 : 0
 
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = var.api_id
   resource_id = local.target_resource_id
   http_method = aws_api_gateway_method.options[0].http_method
   status_code = aws_api_gateway_method_response.options_200[0].status_code
@@ -84,7 +85,7 @@ resource "aws_api_gateway_integration_response" "options" {
 resource "aws_api_gateway_method" "this" {
   for_each = toset(var.http_methods)
 
-  rest_api_id          = data.aws_api_gateway_rest_api.api.id
+  rest_api_id          = var.api_id
   resource_id          = local.target_resource_id
   http_method          = each.value
   authorization        = var.authorization_type
@@ -95,7 +96,7 @@ resource "aws_api_gateway_method" "this" {
 resource "aws_api_gateway_integration" "this" {
   for_each = toset(var.http_methods)
 
-  rest_api_id             = data.aws_api_gateway_rest_api.api.id
+  rest_api_id             = var.api_id
   resource_id             = local.target_resource_id
   http_method             = aws_api_gateway_method.this[each.key].http_method
   integration_http_method = "POST"
@@ -107,7 +108,7 @@ resource "aws_api_gateway_integration" "this" {
 resource "aws_api_gateway_method_response" "this_200" {
   for_each = toset(var.http_methods)
 
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = var.api_id
   resource_id = local.target_resource_id
   http_method = each.value
   status_code = 200
@@ -123,7 +124,7 @@ resource "aws_api_gateway_method_response" "this_200" {
 resource "aws_api_gateway_method_response" "this_500" {
   for_each = toset(var.http_methods)
 
-  rest_api_id = data.aws_api_gateway_rest_api.api.id
+  rest_api_id = var.api_id
   resource_id = local.target_resource_id
   http_method = each.value
   status_code = 500
@@ -146,5 +147,5 @@ resource "aws_lambda_permission" "this" {
   principal     = "apigateway.amazonaws.com"
 
   # Use wildcard for path since we don't track it when using existing_resource_id
-  source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${data.aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.this[each.key].http_method}/*"
+  source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${var.api_id}/*/${aws_api_gateway_method.this[each.key].http_method}/*"
 }
