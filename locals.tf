@@ -12,7 +12,7 @@ locals {
   # Priority: existing_resource_id > newly created resource > legacy path lookup
   target_resource_id = (
     var.existing_resource_id != null ? var.existing_resource_id :
-      local.should_create_resource ? aws_api_gateway_resource.this[0].id :
-      var.existing_resource_id
+    local.should_create_resource ? aws_api_gateway_resource.this[0].id :
+    var.existing_resource_id
   )
 }
