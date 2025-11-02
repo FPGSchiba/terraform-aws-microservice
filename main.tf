@@ -21,7 +21,7 @@ module "lambda" {
 
 # Create the API resource only when not binding to an existing resource
 resource "aws_api_gateway_resource" "this" {
-  count       = local.should_create_resource ? 1 : 0
+  count = local.should_create_resource ? 1 : 0
 
   rest_api_id = var.api_id
   parent_id   = var.parent_id
