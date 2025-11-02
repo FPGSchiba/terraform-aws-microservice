@@ -141,11 +141,13 @@ resource "aws_api_gateway_method_response" "this_500" {
 resource "aws_lambda_permission" "this" {
   for_each = toset(var.http_methods)
 
-  statement_id  = "AllowExecutionFromAPIGateway${each.value}"
-  action        = "lambda:InvokeFunction"
-  function_name = module.lambda.function_name
-  principal     = "apigateway.amazonaws.com"
+  statement_id_prefix = "AllowExecutionFromAPIGateway${each.value}-"
+  action              = "lambda:InvokeFunction"
+  function_name       = module.lambda.function_name
+  principal           = "apigateway.amazonaws.com"
+  source_arn          = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${var.api_id}/*/${aws_api_gateway_method.this[each.key].http_method}/*"
 
-  # Use wildcard for path since we don't track it when using existing_resource_id
-  source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${var.api_id}/*/${aws_api_gateway_method.this[each.key].http_method}/*"
+  lifecycle {
+    ignore_changes = [source_arn]
+  }
 }
