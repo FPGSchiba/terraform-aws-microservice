@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.17.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.16.0 |
 
 ## Modules
 
@@ -33,7 +33,6 @@
 | [aws_api_gateway_method_response.this_500](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_response) | resource |
 | [aws_api_gateway_resource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_resource) | resource |
 | [aws_lambda_permission.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission) | resource |
-| [aws_api_gateway_resource.existing](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/api_gateway_resource) | data source |
 | [aws_api_gateway_rest_api.api](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/api_gateway_rest_api) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
@@ -50,10 +49,9 @@
 | <a name="input_cognito_scopes"></a> [cognito\_scopes](#input\_cognito\_scopes) | The Authorization scope from cognito\_user\_pools. (Only Used if: authorization\_type == 'COGNITO\_USER\_POOLS') | `list(string)` | `null` | no |
 | <a name="input_control_allow_origin"></a> [control\_allow\_origin](#input\_control\_allow\_origin) | The CORS Access-Control-Allow-Origin header value. | `string` | `"*"` | no |
 | <a name="input_cors_enabled"></a> [cors\_enabled](#input\_cors\_enabled) | If the api path is ready for cors requests. | `bool` | n/a | yes |
-| <a name="input_create_if_missing"></a> [create\_if\_missing](#input\_create\_if\_missing) | Create the API resource if it doesn't already exist (ignored when existing\_resource\_path is provided). | `bool` | `true` | no |
 | <a name="input_enable_tracing"></a> [enable\_tracing](#input\_enable\_tracing) | Enable active tracing | `bool` | `false` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Environment variables used by the lambda function | `map(string)` | `{}` | no |
-| <a name="input_existing_resource_path"></a> [existing\_resource\_path](#input\_existing\_resource\_path) | If provided, use this existing API Gateway resource path (e.g., /foo/bar) instead of creating a resource. | `string` | `null` | no |
+| <a name="input_existing_resource_id"></a> [existing\_resource\_id](#input\_existing\_resource\_id) | ID of an existing API Gateway resource to attach methods to. If provided, no new resource will be created and existing\_resource\_path will be ignored. | `string` | `null` | no |
 | <a name="input_go_build_tags"></a> [go\_build\_tags](#input\_go\_build\_tags) | Build tags for go build command | `list(string)` | `[]` | no |
 | <a name="input_handler"></a> [handler](#input\_handler) | Lambda handler | `string` | `null` | no |
 | <a name="input_http_methods"></a> [http\_methods](#input\_http\_methods) | The HTTP Methods used for this API Path. ('GET', 'POST', 'PUT', 'DELETE', 'HEAD') | `list(string)` | n/a | yes |
@@ -76,5 +74,6 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_api_resource_id"></a> [api\_resource\_id](#output\_api\_resource\_id) | The ID of the target API Gateway resource (existing or created). |
-| <a name="output_api_resource_path"></a> [api\_resource\_path](#output\_api\_resource\_path) | The path of the target API Gateway resource (existing or created). |
+| <a name="output_lambda_function_arn"></a> [lambda\_function\_arn](#output\_lambda\_function\_arn) | The ARN of the Lambda function |
+| <a name="output_lambda_function_name"></a> [lambda\_function\_name](#output\_lambda\_function\_name) | The name of the Lambda function |
 <!-- END_TF_DOCS -->

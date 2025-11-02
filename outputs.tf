@@ -3,7 +3,12 @@ output "api_resource_id" {
   value       = local.target_resource_id
 }
 
-output "api_resource_path" {
-  description = "The path of the target API Gateway resource (existing or created)."
-  value       = local.target_resource_path
+output "lambda_function_name" {
+  description = "The name of the Lambda function"
+  value       = module.lambda.function_name
+}
+
+output "lambda_function_arn" {
+  description = "The ARN of the Lambda function"
+  value       = module.lambda.function_arn
 }

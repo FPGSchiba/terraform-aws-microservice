@@ -19,7 +19,7 @@ module "lambda" {
   subnet_ids                = var.subnet_ids
 }
 
-# Create the API resource only when not binding to an existing path
+# Create the API resource only when not binding to an existing resource
 resource "aws_api_gateway_resource" "this" {
   count       = local.should_create_resource ? 1 : 0
   rest_api_id = data.aws_api_gateway_rest_api.api.id
@@ -145,5 +145,6 @@ resource "aws_lambda_permission" "this" {
   function_name = module.lambda.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${data.aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.this[each.key].http_method}${local.target_resource_path}"
+  # Build the source ARN using the resource ID directly
+  source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${data.aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.this[each.key].http_method}/*"
 }
