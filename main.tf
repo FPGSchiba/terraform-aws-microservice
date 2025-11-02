@@ -145,6 +145,6 @@ resource "aws_lambda_permission" "this" {
   function_name = module.lambda.function_name
   principal     = "apigateway.amazonaws.com"
 
-  # Build the source ARN using the resource ID directly
+  # Use wildcard for path since we don't track it when using existing_resource_id
   source_arn = "arn:aws:execute-api:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:${data.aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.this[each.key].http_method}/*"
 }
