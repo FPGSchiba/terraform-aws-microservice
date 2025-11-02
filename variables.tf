@@ -177,8 +177,14 @@ variable "go_build_tags" {
   default     = []
 }
 
+variable "create_resource" {
+  description = "Whether to create a new API Gateway resource. Set to false when using existing_resource_id."
+  type        = bool
+  default     = true
+}
+
 variable "existing_resource_id" {
-  description = "ID of an existing API Gateway resource to attach methods to. If provided, no new resource will be created and existing_resource_path will be ignored."
+  description = "ID of an existing API Gateway resource to attach methods to. Only used when create_resource is false."
   type        = string
   default     = null
 }
