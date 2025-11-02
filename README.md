@@ -17,7 +17,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.2.3 |
+| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.2.4 |
 
 ## Resources
 
@@ -33,7 +33,6 @@
 | [aws_api_gateway_method_response.this_500](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_response) | resource |
 | [aws_api_gateway_resource.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_resource) | resource |
 | [aws_lambda_permission.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission) | resource |
-| [aws_api_gateway_rest_api.api](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/api_gateway_rest_api) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
@@ -42,7 +41,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_iam_statements"></a> [additional\_iam\_statements](#input\_additional\_iam\_statements) | Additional permissions added to the lambda function | <pre>list(object({<br/>    actions   = list(string)<br/>    resources = list(string)<br/>  }))</pre> | `[]` | no |
-| <a name="input_api_name"></a> [api\_name](#input\_api\_name) | A REST API Gateway name used to deploy all methods and stages on. | `string` | n/a | yes |
+| <a name="input_api_id"></a> [api\_id](#input\_api\_id) | The API Gateway REST API ID where the microservice will be deployed. | `string` | n/a | yes |
 | <a name="input_authorization_type"></a> [authorization\_type](#input\_authorization\_type) | The type of Authorization used on this microservice. ('NONE' or 'COGNITO\_USER\_POOLS') | `string` | `"NONE"` | no |
 | <a name="input_authorizer_id"></a> [authorizer\_id](#input\_authorizer\_id) | The Authorizer ID for cognito\_user\_pools. (Only Used if: authorization\_type == 'COGNITO\_USER\_POOLS') | `string` | `null` | no |
 | <a name="input_code_dir"></a> [code\_dir](#input\_code\_dir) | The path to the code to run the lambda function. | `string` | n/a | yes |
