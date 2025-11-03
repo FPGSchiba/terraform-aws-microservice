@@ -17,7 +17,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.2.5 |
+| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.3.0 |
 
 ## Resources
 
