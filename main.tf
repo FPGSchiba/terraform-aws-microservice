@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.2.4"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.2.5"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
@@ -14,6 +14,7 @@ module "lambda" {
   vpc_id                    = var.vpc_id
   tags                      = var.tags
   go_build_tags             = var.go_build_tags
+  go_additional_ldflags     = var.go_additional_ldflags
   vpc_networked             = var.vpc_networked
   vpc_dualstack             = var.vpc_dualstack
   subnet_ids                = var.subnet_ids

@@ -17,7 +17,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.2.4 |
+| <a name="module_lambda"></a> [lambda](#module\_lambda) | github.com/FPGSchiba/terraform-aws-lambda | v2.2.5 |
 
 ## Resources
 
@@ -52,6 +52,7 @@
 | <a name="input_enable_tracing"></a> [enable\_tracing](#input\_enable\_tracing) | Enable active tracing | `bool` | `false` | no |
 | <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | Environment variables used by the lambda function | `map(string)` | `{}` | no |
 | <a name="input_existing_resource_id"></a> [existing\_resource\_id](#input\_existing\_resource\_id) | ID of an existing API Gateway resource to attach methods to. Only used when create\_resource is false. | `string` | `null` | no |
+| <a name="input_go_additional_ldflags"></a> [go\_additional\_ldflags](#input\_go\_additional\_ldflags) | Additional -X ldflags for go build command as key-value pairs (e.g., {"github.com/fpgschiba/volleygoals/router.SelectedHandler" = "GetTeam"}) | `map(string)` | `{}` | no |
 | <a name="input_go_build_tags"></a> [go\_build\_tags](#input\_go\_build\_tags) | Build tags for go build command | `list(string)` | `[]` | no |
 | <a name="input_handler"></a> [handler](#input\_handler) | Lambda handler | `string` | `null` | no |
 | <a name="input_http_methods"></a> [http\_methods](#input\_http\_methods) | The HTTP Methods used for this API Path. ('GET', 'POST', 'PUT', 'DELETE', 'HEAD') | `list(string)` | n/a | yes |
