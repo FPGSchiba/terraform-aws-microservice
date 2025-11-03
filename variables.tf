@@ -177,6 +177,13 @@ variable "go_build_tags" {
   default     = []
 }
 
+variable "go_additional_ldflags" {
+  description = "Additional -X ldflags for go build command as key-value pairs (e.g., {\"github.com/fpgschiba/volleygoals/router.SelectedHandler\" = \"GetTeam\"})"
+  type        = map(string)
+  default     = {}
+}
+
+
 variable "create_resource" {
   description = "Whether to create a new API Gateway resource. Set to false when using existing_resource_id."
   type        = bool
