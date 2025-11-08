@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.3.2"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.3.3"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
