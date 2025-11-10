@@ -69,6 +69,34 @@ variable "enable_tracing" {
   default     = false
 }
 
+variable "json_logging" {
+  description = "Enable structured JSON logging"
+  type        = bool
+  default     = false
+}
+
+variable "app_log_level" {
+  description = "Log level for the application logs"
+  type        = string
+  default     = "INFO"
+
+  validation {
+    condition     = contains(["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"], var.app_log_level)
+    error_message = "app_log_level must be one of: TRACE, DEBUG, INFO, WARN, ERROR, FATAL."
+  }
+}
+
+variable "system_log_level" {
+  description = "Log level for the system logs"
+  type        = string
+  default     = "WARN"
+
+  validation {
+    condition     = contains(["DEBUG", "INFO", "WARN"], var.system_log_level)
+    error_message = "system_log_level must be one of: DEBUG, INFO, WARN."
+  }
+}
+
 variable "timeout" {
   description = "Number of seconds, until the Lambda timeouts"
   type        = number

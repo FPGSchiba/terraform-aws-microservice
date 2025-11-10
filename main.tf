@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.3.3"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.3.4"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
@@ -18,6 +18,9 @@ module "lambda" {
   vpc_networked             = var.vpc_networked
   vpc_dualstack             = var.vpc_dualstack
   subnet_ids                = var.subnet_ids
+  json_logging              = var.json_logging
+  app_log_level             = var.app_log_level
+  system_log_level          = var.system_log_level
 }
 
 # Create the API resource only when not binding to an existing resource
