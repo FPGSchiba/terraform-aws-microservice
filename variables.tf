@@ -211,6 +211,18 @@ variable "go_additional_ldflags" {
   default     = {}
 }
 
+variable "handler_name" {
+  description = "Handler name passed as the HANDLER environment variable for runtime dispatch. Merged into environment_variables. Used with the build-once pattern."
+  type        = string
+  default     = null
+}
+
+variable "pre_built_zip" {
+  description = "Path to a pre-built zip file. Passed through to terraform-aws-lambda, skipping the per-function go build."
+  type        = string
+  default     = null
+}
+
 
 variable "create_resource" {
   description = "Whether to create a new API Gateway resource. Set to false when using existing_resource_id."
