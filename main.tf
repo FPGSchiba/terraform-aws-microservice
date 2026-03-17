@@ -1,12 +1,12 @@
 module "lambda" {
-  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.3.4"
+  source = "github.com/FPGSchiba/terraform-aws-lambda?ref=v2.4.0"
 
   code_dir                  = var.code_dir
   name                      = "${var.prefix}-${var.name_overwrite == null ? var.path_name : var.name_overwrite}"
   layer_arns                = var.layer_arns
   runtime                   = var.runtime
   handler                   = var.handler
-  environment_variables     = var.environment_variables
+  environment_variables     = var.handler_name != null ? merge(var.environment_variables, { "HANDLER" = var.handler_name }) : var.environment_variables
   enable_tracing            = var.enable_tracing
   timeout                   = var.timeout
   additional_iam_statements = var.additional_iam_statements
@@ -15,6 +15,7 @@ module "lambda" {
   tags                      = var.tags
   go_build_tags             = var.go_build_tags
   go_additional_ldflags     = var.go_additional_ldflags
+  pre_built_zip             = var.pre_built_zip
   vpc_networked             = var.vpc_networked
   vpc_dualstack             = var.vpc_dualstack
   subnet_ids                = var.subnet_ids
