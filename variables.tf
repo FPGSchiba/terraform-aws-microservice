@@ -235,3 +235,9 @@ variable "existing_resource_id" {
   type        = string
   default     = null
 }
+
+variable "create_options_method" {
+  description = "Whether to create the OPTIONS method for CORS preflight on this resource. Set to false when another module sharing the same resource already creates it."
+  type        = bool
+  default     = true
+}
