@@ -35,7 +35,7 @@ resource "aws_api_gateway_resource" "this" {
 
 # CORS: OPTIONS method
 resource "aws_api_gateway_method" "options" {
-  count = var.cors_enabled ? 1 : 0
+  count = var.cors_enabled && var.create_options_method ? 1 : 0
 
   rest_api_id   = var.api_id
   resource_id   = local.target_resource_id
@@ -44,7 +44,7 @@ resource "aws_api_gateway_method" "options" {
 }
 
 resource "aws_api_gateway_method_response" "options_200" {
-  count = var.cors_enabled ? 1 : 0
+  count = var.cors_enabled && var.create_options_method ? 1 : 0
 
   rest_api_id = var.api_id
   resource_id = local.target_resource_id
@@ -61,7 +61,7 @@ resource "aws_api_gateway_method_response" "options_200" {
 }
 
 resource "aws_api_gateway_integration" "options" {
-  count = var.cors_enabled ? 1 : 0
+  count = var.cors_enabled && var.create_options_method ? 1 : 0
 
   rest_api_id = var.api_id
   resource_id = local.target_resource_id
@@ -73,7 +73,7 @@ resource "aws_api_gateway_integration" "options" {
 }
 
 resource "aws_api_gateway_integration_response" "options" {
-  count = var.cors_enabled ? 1 : 0
+  count = var.cors_enabled && var.create_options_method ? 1 : 0
 
   rest_api_id = var.api_id
   resource_id = local.target_resource_id
