@@ -118,6 +118,18 @@ variable "control_allow_origin" {
   default     = "*"
 }
 
+variable "control_allow_methods" {
+  description = "The CORS Access-Control-Allow-Methods header value. Only used if cors_enabled is true. If not set, it will be generated from the http_methods variable."
+  type        = list(string)
+  default     = null
+  nullable    = true
+
+  validation {
+    condition     = var.control_allow_methods == null || alltrue([for method in var.control_allow_methods : contains(["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "TRACE"], method)])
+    error_message = "Only the following HTTP Methods are supported in control_allow_methods: ('GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'TRACE'). Please read the documentation in order to understand this better."
+  }
+}
+
 variable "authorization_type" {
   description = "The type of Authorization used on this microservice. ('NONE' or 'COGNITO_USER_POOLS')"
   type        = string
