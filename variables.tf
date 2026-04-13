@@ -125,8 +125,11 @@ variable "control_allow_methods" {
   nullable    = true
 
   validation {
-    condition     = var.control_allow_methods == null || alltrue([for method in var.control_allow_methods : contains(["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "TRACE"], method)])
-    error_message = "Only the following HTTP Methods are supported in control_allow_methods: ('GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'TRACE'). Please read the documentation in order to understand this better."
+    condition = var.control_allow_methods == null || (
+      length(var.control_allow_methods) > 0 &&
+      alltrue([for method in var.control_allow_methods : contains(["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "TRACE"], method)])
+    )
+    error_message = "control_allow_methods must be null or a non-empty list containing only the following HTTP Methods: ('GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'TRACE'). Please read the documentation in order to understand this better."
   }
 }
 
